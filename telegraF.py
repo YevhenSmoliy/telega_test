@@ -5,8 +5,8 @@ import sys
 from telebot import types
 import sqlite3
 #bot tokken and connection to db
-bot = telebot.TeleBot("677750494:AAG-gD2SCkGwof8s9OtMnEd845bhoIZtD0s")
-conn=sqlite3.connect('test_v0.3C.db')
+bot = telebot.TeleBot("780816167:AAHzJn-oL_8erF6Q33KvY2k6XrrMQzY2LVA")
+conn=sqlite3.connect('telega_test/test_v0.3C.db')
 cursor=conn.cursor()
 #user_dict = {}
 
@@ -45,7 +45,7 @@ def info_message(message):
 @bot.message_handler(commands=['last'])
 def last_message(message):
     echo=bot.send_message(message.chat.id,'5 last adds')
-    conn=sqlite3.connect('test_v0.3C.db')
+    conn=sqlite3.connect('telega_test/test_v0.3C.db')
     cursor=conn.cursor()
     cursor.execute("SELECT * FROM Doroga1 ORDER BY balance DESC LIMIT 5")
     last=cursor.fetchall()
@@ -64,7 +64,7 @@ def extract_msg(message):
    bot.register_next_step_handler(message=echo,callback=price_d)
    #get first value=name,make it global
 def price_d(message):
-    conn=sqlite3.connect('test_v0.3C.db')
+    conn=sqlite3.connect('telega_test/test_v0.3C.db')
     cursor1=conn.cursor()
     msg2=(message.text)
     print(msg2)
@@ -76,7 +76,7 @@ def price_d(message):
     timeC=datetime.datetime.now()
     cursor1.execute("INSERT INTO Doroga1 VALUES(?,?,?,?)",(Name1,Price1,BankAccount.doroga,timeC))
     conn.commit()
-    bot.send_message(message.chat.id,'You add:' + str(Name1)+'.With price:'+Price1+" "+"Total minus:"+str(BankAccount.doroga))
+    bot.send_message(message.chat.id,'You add: ' + str(Name1)+'\n'+'.With price:'+Price1+'\n'+" Total minus:"+str(BankAccount.doroga))
     #add all creatind valuse in db,bot print valus for us,end  
 
 
@@ -96,7 +96,6 @@ if __name__ == '__main__':
    except KeyboardInterrupt:
      
       sys.exit(0)
-
 
 
 
