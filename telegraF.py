@@ -57,7 +57,7 @@ def info_message(message):
 @bot.message_handler(commands=['last'])
 def last_message(message):
     echo = bot.send_message(message.chat.id, '5 last adds')
-    conn = sqlite3.connect('telega_test/test_v0.3C.db')
+    conn = sqlite3.connect('test_v0.3C.db')
     cursor = conn.cursor()
     cursor.execute("SELECT * FROM Doroga1 ORDER BY balance DESC LIMIT 5")
     last = cursor.fetchall()
@@ -77,7 +77,7 @@ def extract_msg(message):
 
 
 def price_d(message):
-    conn = sqlite3.connect('telega_test/test_v0.3C.db')
+    conn = sqlite3.connect('test_v0.3C.db')
     cursor1 = conn.cursor()
     msg2 = (message.text)
     print(msg2)
