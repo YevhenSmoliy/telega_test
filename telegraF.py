@@ -21,21 +21,21 @@ cursor = conn.cursor()
 class BankAccount:
     # class for balance and take max value from db
     cursor.execute("SELECT balance FROM Doroga1 ORDER BY balance DESC LIMIT 1")
-    DorogaM = cursor.fetchall()
-    Doroga1 = DorogaM[0]
-    doroga, = Doroga1
+    Full_value_bd = cursor.fetchall()
+    Full_value = Full_value_bd[0]
+    Full, = Full_value
 
     def __init__(self, name, amount):  # main function
         self.name = name
         self.amount = amount
-        BankAccount.doroga += (amount)
+        BankAccount.Full += (amount)
         # cursor.execute("INSERT INTO Doroga1 VALUES(?,?,?)",(BankAccount.doroga,self.amount,self.name))
         # conn.commit()
 
 
 @bot.message_handler(commands=['start', 'Start'])
 def echo_msg(message):
-    echo = bot.send_message(chat_id=message.chat.id,
+    bot.send_message(chat_id=message.chat.id,
                             text='Hello!Nice too see you again. /add - if you wanna ad smth,/info - if you wanna see total minus,/last - to see last 5 inputs.......Version 0.3C)')
 
 
@@ -51,12 +51,12 @@ def echo_msg2(message):
 
 @bot.message_handler(commands=['info'])
 def info_message(message):
-    echo = bot.send_message(message.chat.id, 'Total minus:' + str(BankAccount.doroga))
+    bot.send_message(message.chat.id, 'Total minus:' + str(BankAccount.Full))
 
 
 @bot.message_handler(commands=['last'])
 def last_message(message):
-    echo = bot.send_message(message.chat.id, '5 last adds')
+    bot.send_message(message.chat.id, '5 last adds')
     conn = sqlite3.connect('test_v0.3C.db')
     cursor = conn.cursor()
     cursor.execute("SELECT * FROM Doroga1 ORDER BY balance DESC LIMIT 5")
@@ -81,17 +81,17 @@ def price_d(message):
     cursor1 = conn.cursor()
     msg2 = (message.text)
     print(msg2)
-    Price1 = msg2
+    price1 = msg2
     # take 2 value Price and make it float for object and class
-    custumer = BankAccount(Name1, float(Price1))
+    custumer = BankAccount(Name1, float(price1))
     print(custumer)
-    print(BankAccount.doroga)
-    timeC = datetime.datetime.now()
-    cursor1.execute("INSERT INTO Doroga1 VALUES(?,?,?,?)", (Name1, Price1, BankAccount.doroga, timeC))
+    print(BankAccount.Full)
+    timec = datetime.datetime.now()
+    cursor1.execute("INSERT INTO Doroga1 VALUES(?,?,?,?)", (Name1, price1, BankAccount.Full, timec))
     conn.commit()
     bot.send_message(message.chat.id,
-                     'You add: ' + str(Name1) + '\n' + '.With price:' + Price1 + '\n' + " Total minus:" + str(
-                         BankAccount.doroga))
+                     'You add: ' + str(Name1) + '\n' + '.With price:' + price1 + '\n' + " Total minus:" + str(
+                         BankAccount.Full))
     # add all creatind valuse in db,bot print valus for us,end
 
 
